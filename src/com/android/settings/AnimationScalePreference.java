@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 import com.android.settingslib.CustomDialogPreferenceCompat;
 
-public class AnimationScalePreference extends CustomDialogPreference
+public class AnimationScalePreference extends CustomDialogPreferenceCompat
     implements SeekBar.OnSeekBarChangeListener {
 
     private TextView mScaleText;
