@@ -44,7 +44,16 @@ android_library {
         "SettingsLib-search-defaults",
     ],
 
-    srcs: ["src/**/*.java"],
+    srcs: ["src/**/*.java",
+           "OctaviLab/src/**/*.java",
+    ],
+
+    aaptflags: ["--extra-packages com.octavi.lab"],
+
+    resource_dirs: [
+        "res",
+        "OctaviLab/res",
+    ],
 
     static_libs: [
         "androidx-constraintlayout_constraintlayout",
@@ -75,6 +84,7 @@ android_library {
         "lottie",
         "windowExtLib",
         "VendorSupport-Libs",
+        "kotlin-stdlib",
     ],
 
     libs: [
@@ -82,6 +92,7 @@ android_library {
         "ims-common",
         "app-compat-annotations",
     ],
+
 }
 
 platform_compat_config {
