@@ -329,7 +329,8 @@ public class SettingsGateway {
             AlarmsAndRemindersDetails.class.getName(),
             MediaManagementAppsDetails.class.getName(),
             OctaviLab.class.getName(),
-            RunningServices.class.getName()
+            RunningServices.class.getName(),
+            LiveDisplaySettings.class.getName()
     };
 
     public static final String[] SETTINGS_FOR_RESTRICTED = {
@@ -371,7 +372,6 @@ public class SettingsGateway {
             Settings.ModuleLicensesActivity.class.getName(),
             UserBackupSettingsActivity.class.getName(),
             Settings.OctaviLabActivity.class.getName(),
-            Settings.DevRunningServicesActivity.class.getName(),
-            LiveDisplaySettings.class.getName()
+            Settings.DevRunningServicesActivity.class.getName()
     };
 }
