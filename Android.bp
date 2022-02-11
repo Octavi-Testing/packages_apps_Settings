@@ -75,6 +75,7 @@ android_library {
         "glide",
         "lottie",
         "windowExtLib",
+        "faceunlock_framework",
     ],
 
     libs: [
