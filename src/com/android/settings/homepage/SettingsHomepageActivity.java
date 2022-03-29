@@ -21,6 +21,7 @@ import static android.provider.Settings.EXTRA_SETTINGS_EMBEDDED_DEEP_LINK_HIGHLI
 import static android.provider.Settings.EXTRA_SETTINGS_EMBEDDED_DEEP_LINK_INTENT_URI;
 
 import android.animation.LayoutTransition;
+import android.animation.ObjectAnimator;
 import android.app.ActivityManager;
 import android.app.settings.SettingsEnums;
 import android.content.ComponentName;
@@ -37,6 +38,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 import androidx.fragment.app.Fragment;
@@ -58,7 +60,9 @@ import com.android.settings.overlay.FeatureFactory;
 import com.android.settingslib.Utils;
 import com.android.settingslib.core.lifecycle.HideNonSystemOverlayMixin;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import java.util.ArrayList;
 
 import java.net.URISyntaxException;
 import java.util.Set;
@@ -89,6 +93,29 @@ public class SettingsHomepageActivity extends FragmentActivity implements
     private Set<HomepageLoadedListener> mLoadedListeners;
     private boolean mIsEmbeddingActivityEnabled;
     private boolean mIsTwoPaneLastTime;
+
+    static ArrayList<String> text=new ArrayList<>();
+    static {
+        text.add("Thanks, for choosing Octavi!");
+	text.add("I wonder how many rejections you had");
+	text.add("Always remember that you're unique");
+        text.add("Constipated people don’t give a crap");
+        text.add("Unicorns ARE real, we call them rhinos");
+        text.add("If there is a *WILL*, there are 500 relatives");
+        text.add("Those who throw dirt only lose ground");
+        text.add("I’d like to help you out");
+        text.add("Age is a question of mind over matter");
+        text.add("I’m an excellent housekeeper");
+        text.add("Change is good, but dollars are better");
+        text.add("If you cannot convince them, confuse them");
+        text.add("This sentence is a lie");
+        text.add("Make everyday a little less ordinary");
+        text.add("Stupidity is not a crime so you are free to go.");
+        text.add("I'm not insulting you. I'm describing you");
+        text.add("You're so fake, Barbie is jealous");
+        text.add("Believe you can, and you are halfway there");
+	text.add("Whatever you are, be a good one");
+    }
 
     /** A listener receiving homepage loaded events. */
     public interface HomepageLoadedListener {
@@ -156,7 +183,23 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         final Toolbar toolbar = root.findViewById(R.id.search_action_bar);
 	collapsing_toolbar =  root.findViewById(R.id.collapsing_toolbar);
 
-        getLifecycle().addObserver(new HideNonSystemOverlayMixin(this));
+        TextView greeter = root.findViewById(R.id.greeter);
+	greeter.setText(text.get(randomNum(0, text.size()-1)));
+
+	AppBarLayout appBarLayout = root.findViewById(R.id.appbar);
+        appBarLayout.addOnOffsetChangedListener((appBarLayout1, i) -> {
+
+            float abs = ((float) Math.abs(i)) / ((float) appBarLayout1.getTotalScrollRange());
+            float f2 = 1.0f - abs;
+            //greeter text
+            if (f2 == 1.0)
+                ObjectAnimator.ofFloat(greeter, View.ALPHA, 1f).setDuration(500).start();
+            else
+                greeter.setAlpha(0f);
+
+        });
+
+   getLifecycle().addObserver(new HideNonSystemOverlayMixin(this));
 	collapsing_toolbar.setTitle("Settings");
         mCategoryMixin = new CategoryMixin(this);
         getLifecycle().addObserver(mCategoryMixin);
@@ -390,5 +433,10 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         final int searchBarHeight = getResources().getDimensionPixelSize(R.dimen.search_bar_height);
         final int searchBarMargin = getResources().getDimensionPixelSize(R.dimen.search_bar_margin);
         return searchBarHeight + searchBarMargin * 2;
+    }
+
+    private int randomNum(int min , int max) {
+	int r = (max - min) + 1;
+	return (int)(Math.random() * r) + min;
     }
 }
